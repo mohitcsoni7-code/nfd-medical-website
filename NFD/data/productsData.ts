@@ -1,9 +1,9 @@
-import newHeliosImage from 'figma:asset/f0b9f58c4b532564dd94427c8772e1b834e29f7b.png';
-import newProductImage2 from 'figma:asset/c6e8cf08900c4f003e91511f850f2c87c661bfc6.png';
-import newMicroCatheterImage from 'figma:asset/4c15560a53077225314102fca0149f1574c3886c.png';
-import newDistalAccessImage from 'figma:asset/1195dc5a0e132f64fe34dfe37003c74c0b3b457e.png';
-import newAspirationImage from 'figma:asset/b7cfcbe616d869c4c435adebe59881b89c9b474b.png';
-import newSupportCatheterImage from 'figma:asset/fce1211a4fcd3fe89304df453d80fbd660173153.png';
+const newHeliosImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Helios</text></svg>');
+const newProductImage2 = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Product 2</text></svg>');
+const newMicroCatheterImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Micro Catheter</text></svg>');
+const newDistalAccessImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Distal Access</text></svg>');
+const newAspirationImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Aspiration</text></svg>');
+const newSupportCatheterImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Support Catheter</text></svg>');
 
 export interface ProductFeature {
   title: string;
