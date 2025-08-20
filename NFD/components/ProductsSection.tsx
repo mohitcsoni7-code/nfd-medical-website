@@ -6,11 +6,11 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ArrowRight, Award } from 'lucide-react';
 
 // Import the correct product images (HELIOS image removed as product is temporarily hidden)
-const newProductImage2 = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Product 2</text></svg>');
-const newMicroCatheterImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Micro Catheter</text></svg>');
-const newDistalAccessImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Distal Access</text></svg>');
-const newAspirationImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Aspiration</text></svg>');
-const newSupportCatheterImage = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="16">Support Catheter</text></svg>');
+const newProductImage2 = '/images/product-2.png';
+const newMicroCatheterImage = '/images/micro-catheter.png';
+const newDistalAccessImage = '/images/distal-access.png';
+const newAspirationImage = '/images/aspiration.png';
+const newSupportCatheterImage = '/images/support-catheter.png';
 
 interface ProductsSectionProps {
   colors: any;
