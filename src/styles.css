@@ -1,7 +1,6 @@
+@import url("../NFD/styles/globals.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('../NFD/styles/globals.css');
 
 
