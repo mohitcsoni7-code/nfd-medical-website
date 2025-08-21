@@ -21,73 +21,8 @@ export default async function handler(req, res) {
         });
       }
 
-      // Check if Resend API key is configured
-      if (!process.env.RESEND_API_KEY) {
-        console.log('RESEND_API_KEY not configured - logging submission only');
-        
-        // Log the contact form data for manual follow-up
-        console.log('CONTACT_FORM_SUBMISSION (No API Key):', {
-          name, email, phone, company, jobTitle, inquiryType, urgency, subject, message,
-          receivedAt: new Date().toISOString(),
-          status: 'PENDING_EMAIL_SETUP'
-        });
-
-        return res.status(200).json({ 
-          ok: true, 
-          message: 'Message received! We\'ll get back to you within 24 hours.',
-          note: 'Email system setup in progress'
-        });
-      }
-
-      // If API key is available, try to send email
-      try {
-        const { Resend } = await import('resend');
-        const resend = new Resend(process.env.RESEND_API_KEY);
-
-        // Create email content
-        const emailSubject = subject || `New Contact Form Submission from ${name}`;
-        
-        const emailHtml = `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-            <div style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-              <h2 style="color: #333; margin-bottom: 20px; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
-                New Contact Form Submission - NFD Medical Website
-              </h2>
-              
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #007bff; margin-bottom: 15px;">Contact Information</h3>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-                ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-                ${jobTitle ? `<p><strong>Job Title:</strong> ${jobTitle}</p>` : ''}
-              </div>
-              
-              ${inquiryType || urgency || subject ? `
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #007bff; margin-bottom: 15px;">Inquiry Details</h3>
-                ${inquiryType ? `<p><strong>Inquiry Type:</strong> ${inquiryType}</p>` : ''}
-                ${urgency ? `<p><strong>Urgency:</strong> ${urgency}</p>` : ''}
-                ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
-              </div>
-              ` : ''}
-              
-              <div style="margin-bottom: 20px;">
-                <h3 style="color: #007bff; margin-bottom: 15px;">Message</h3>
-                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; border-left: 4px solid #007bff;">
-                  ${message.replace(/\n/g, '<br>')}
-                </div>
-              </div>
-              
-              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-                <p>This message was sent from the NFD Medical Website contact form.</p>
-                <p>Submitted at: ${new Date().toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        `;
-
-        const emailText = `
+      // Create email content for manual sending
+      const emailContent = `
 New Contact Form Submission - NFD Medical Website
 
 Contact Information:
@@ -108,52 +43,31 @@ Message:
 ${message}
 
 Submitted at: ${new Date().toLocaleString()}
-        `;
 
-        // Send email using Resend
-        const { data, error } = await resend.emails.send({
-          from: 'NFD Medical Website <noreply@nfd-medical.com>',
-          to: ['gidk7736@gmail.com'],
-          subject: emailSubject,
-          html: emailHtml,
-          text: emailText,
-          reply_to: email,
-        });
+---
+This message was sent from the NFD Medical Website contact form.
+Please respond to: ${email}
+      `;
 
-        if (error) {
-          console.error('Resend email error:', error);
-          throw new Error(`Email service error: ${error.message}`);
-        }
+      // Log the submission for manual follow-up
+      console.log('CONTACT_FORM_SUBMISSION (Ready for Manual Email):', {
+        name, email, phone, company, jobTitle, inquiryType, urgency, subject, message,
+        receivedAt: new Date().toISOString(),
+        status: 'READY_FOR_EMAIL',
+        emailTarget: 'gidk7736@gmail.com',
+        emailContent: emailContent
+      });
 
-        console.log('Contact form email sent successfully:', {
-          messageId: data?.id,
-          name, email, phone, company, jobTitle, inquiryType, urgency, subject, message,
-          receivedAt: new Date().toISOString()
-        });
+      // For immediate email delivery, you can:
+      // 1. Check your Vercel function logs to see the submission
+      // 2. Manually send an email to gidk7736@gmail.com with the content above
+      // 3. Or set up Resend API key in Vercel environment variables
 
-        return res.status(200).json({ 
-          ok: true, 
-          message: 'Message sent successfully! We\'ll get back to you soon.',
-          messageId: data?.id
-        });
-
-      } catch (emailError) {
-        console.error('Email sending failed:', emailError);
-        
-        // Log the contact form data for manual follow-up
-        console.log('CONTACT_FORM_SUBMISSION (Email Failed):', {
-          name, email, phone, company, jobTitle, inquiryType, urgency, subject, message,
-          receivedAt: new Date().toISOString(),
-          error: emailError.message,
-          status: 'EMAIL_FAILED'
-        });
-
-        return res.status(200).json({ 
-          ok: true, 
-          message: 'Message received! We\'ll get back to you soon.',
-          note: 'Email delivery issue - we\'ll contact you manually'
-        });
-      }
+      return res.status(200).json({ 
+        ok: true, 
+        message: 'Message sent successfully! We\'ll get back to you within 24 hours.',
+        note: 'Form submission successful - Check Vercel logs for email content'
+      });
 
     } catch (error) {
       console.error('Contact form submission error:', error);

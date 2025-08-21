@@ -57,6 +57,9 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit, goToThankYou }: Contac
     e.preventDefault();
     console.log('Form submitted!', { formData, goToThankYou });
     
+    // Add immediate feedback
+    toast("Submitting form...");
+    
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -71,14 +74,19 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit, goToThankYou }: Contac
 
       if (response.ok && result.ok) {
         console.log('Success! Navigating to thank you page...');
+        toast("Message sent successfully! Navigating to thank you page...");
+        
         // Navigate to thank you page directly
         if (goToThankYou) {
+          console.log('Calling goToThankYou function...');
           goToThankYou();
         } else if (onFormSubmit) {
+          console.log('Calling onFormSubmit function...');
           onFormSubmit();
+        } else {
+          console.log('No navigation function available!');
         }
-        // Also show success message
-        toast("Message sent successfully! We'll get back to you within 24 hours.");
+        
         // Reset form
         setFormData({
           name: '', email: '', phone: '', company: '', jobTitle: '',
