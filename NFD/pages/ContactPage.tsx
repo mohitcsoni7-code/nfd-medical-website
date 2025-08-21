@@ -54,6 +54,7 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted!', { formData, onFormSubmit });
     
     try {
       const response = await fetch('/api/contact', {
@@ -65,13 +66,17 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
       });
 
       const result = await response.json();
+      console.log('API response:', { response: response.ok, result });
 
       if (response.ok && result.ok) {
+        console.log('Success! Calling onFormSubmit...');
+        // Always call onFormSubmit to navigate to thank you page
         if (onFormSubmit) {
-          onFormSubmit(); // Navigates to thank you page
-        } else {
-          toast("Message sent successfully! We'll get back to you within 24 hours.");
+          onFormSubmit();
         }
+        // Also show success message
+        toast("Message sent successfully! We'll get back to you within 24 hours.");
+        // Reset form
         setFormData({
           name: '', email: '', phone: '', company: '', jobTitle: '',
           inquiryType: '', urgency: '', subject: '', message: ''
