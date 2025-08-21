@@ -16,7 +16,7 @@ import {
   Calendar,
   Download
 } from 'lucide-react';
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 import { downloadCatalog, isCatalogAvailable } from '../utils/catalogUtils';
 
 interface ContactPageProps {
@@ -52,25 +52,38 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
     }));
   }, []);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (onFormSubmit) {
-      onFormSubmit();
-    } else {
-      toast("Message sent successfully! We'll get back to you within 24 hours.");
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        jobTitle: '',
-        inquiryType: '',
-        urgency: '',
-        subject: '',
-        message: ''
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      const result = await response.json();
+
+      if (response.ok && result.ok) {
+        if (onFormSubmit) {
+          onFormSubmit(); // Navigates to thank you page
+        } else {
+          toast("Message sent successfully! We'll get back to you within 24 hours.");
+        }
+        setFormData({
+          name: '', email: '', phone: '', company: '', jobTitle: '',
+          inquiryType: '', urgency: '', subject: '', message: ''
+        });
+      } else {
+        toast(`Failed to send message: ${result.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Contact form submission error:', error);
+      toast("There was an error sending your message. Please try again.");
     }
-  }, [onFormSubmit]);
+  }, [formData, onFormSubmit]);
 
   const handleDownloadCatalog = useCallback(() => {
     if (!isCatalogAvailable()) {
