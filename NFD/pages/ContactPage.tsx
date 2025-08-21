@@ -54,6 +54,7 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    alert('Form submitted! Check console for details.');
     console.log('Form submitted!', { formData, onFormSubmit });
     
     try {
@@ -70,6 +71,7 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
 
       if (response.ok && result.ok) {
         console.log('Success! Calling onFormSubmit...');
+        alert('API call successful! Navigating to thank you page...');
         // Always call onFormSubmit to navigate to thank you page
         if (onFormSubmit) {
           onFormSubmit();

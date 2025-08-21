@@ -7,8 +7,14 @@ export default async function handler(req, res) {
     try {
       const { name, email, message, phone, company, jobTitle, inquiryType, urgency, subject } = req.body;
 
+      console.log('=== CONTACT FORM SUBMISSION ===');
+      console.log('Timestamp:', new Date().toISOString());
+      console.log('Data:', { name, email, phone, company, jobTitle, inquiryType, urgency, subject, message });
+      console.log('==============================');
+
       // Validate required fields
       if (!name || !email || !message) {
+        console.error('Missing required fields:', { name: !!name, email: !!email, message: !!message });
         return res.status(400).json({ 
           ok: false, 
           error: 'Name, email, and message are required.' 
@@ -17,7 +23,7 @@ export default async function handler(req, res) {
 
       // Check if Resend API key is configured
       if (!process.env.RESEND_API_KEY) {
-        console.error('RESEND_API_KEY not configured');
+        console.log('RESEND_API_KEY not configured - logging submission only');
         
         // Log the contact form data for manual follow-up
         console.log('CONTACT_FORM_SUBMISSION (No API Key):', {
@@ -28,7 +34,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ 
           ok: true, 
-          message: 'Message received! We\'ll get back to you soon.',
+          message: 'Message received! We\'ll get back to you within 24 hours.',
           note: 'Email system setup in progress'
         });
       }
