@@ -93,11 +93,13 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit, goToThankYou }: Contac
           inquiryType: '', urgency: '', subject: '', message: ''
         });
       } else {
-        toast(`Failed to send message: ${result.error || 'Unknown error'}`);
+        const errorMessage = result.error || 'Something went wrong, please try again.';
+        toast(errorMessage);
+        console.error('Form submission failed:', result);
       }
     } catch (error) {
       console.error('Contact form submission error:', error);
-      toast("There was an error sending your message. Please try again.");
+      toast("Something went wrong, please try again.");
     }
   }, [formData, onFormSubmit, goToThankYou]);
 
