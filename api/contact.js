@@ -113,7 +113,7 @@ Submitted at: ${new Date().toLocaleString()}
         // Send email using Resend
         const { data, error } = await resend.emails.send({
           from: 'NFD Medical Website <noreply@nfd-medical.com>',
-          to: ['mohitcsoni7@gmail.com'],
+          to: ['gidk7736@gmail.com'],
           subject: emailSubject,
           html: emailHtml,
           text: emailText,

@@ -34,6 +34,7 @@ interface RouteRendererProps {
   goHome: () => void;
   goToProducts: () => void;
   goToContact: () => void;
+  goToThankYou: () => void;
   goToTermsOfUse: () => void;
   goToPrivacyPolicy: () => void;
   goToCookiePolicy: () => void;
@@ -60,6 +61,7 @@ export const RouteRenderer = memo(({
   goHome,
   goToProducts,
   goToContact,
+  goToThankYou,
   goToTermsOfUse,
   goToPrivacyPolicy,
   goToCookiePolicy,
@@ -143,7 +145,7 @@ export const RouteRenderer = memo(({
         )}
 
         {currentRoute === 'contact' && (
-          <ContactPage colors={colors} onBack={goHome} onFormSubmit={handleFormSubmit} />
+          <ContactPage colors={colors} onBack={goHome} onFormSubmit={handleFormSubmit} goToThankYou={goToThankYou} />
         )}
 
         {currentRoute === 'thank-you' && (

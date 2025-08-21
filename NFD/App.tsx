@@ -135,6 +135,7 @@ function App() {
             goHome={goHome}
             goToProducts={goToProducts}
             goToContact={goToContact}
+            goToThankYou={goToThankYou}
             goToTermsOfUse={goToTermsOfUse}
             goToPrivacyPolicy={goToPrivacyPolicy}
             goToCookiePolicy={goToCookiePolicy}

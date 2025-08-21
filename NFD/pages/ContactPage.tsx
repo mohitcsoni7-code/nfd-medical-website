@@ -23,9 +23,10 @@ interface ContactPageProps {
   colors: any;
   onBack: () => void;
   onFormSubmit?: () => void;
+  goToThankYou?: () => void;
 }
 
-const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) => {
+const ContactPage = memo(({ colors, onBack, onFormSubmit, goToThankYou }: ContactPageProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -54,8 +55,7 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Form submitted! Check console for details.');
-    console.log('Form submitted!', { formData, onFormSubmit });
+    console.log('Form submitted!', { formData, goToThankYou });
     
     try {
       const response = await fetch('/api/contact', {
@@ -70,10 +70,11 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
       console.log('API response:', { response: response.ok, result });
 
       if (response.ok && result.ok) {
-        console.log('Success! Calling onFormSubmit...');
-        alert('API call successful! Navigating to thank you page...');
-        // Always call onFormSubmit to navigate to thank you page
-        if (onFormSubmit) {
+        console.log('Success! Navigating to thank you page...');
+        // Navigate to thank you page directly
+        if (goToThankYou) {
+          goToThankYou();
+        } else if (onFormSubmit) {
           onFormSubmit();
         }
         // Also show success message
@@ -90,7 +91,7 @@ const ContactPage = memo(({ colors, onBack, onFormSubmit }: ContactPageProps) =>
       console.error('Contact form submission error:', error);
       toast("There was an error sending your message. Please try again.");
     }
-  }, [formData, onFormSubmit]);
+  }, [formData, onFormSubmit, goToThankYou]);
 
   const handleDownloadCatalog = useCallback(() => {
     if (!isCatalogAvailable()) {
