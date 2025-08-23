@@ -73,8 +73,7 @@ export const Navigation = memo(({ colors, isMenuOpen, onMenuToggle, onNavigate }
             onClick={onMenuToggle}
             className="md:hidden p-2 rounded-md transition-all hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2"
             style={{ 
-              color: colors.primary,
-              focusRingColor: colors.accent 
+              color: colors.primary
             }}
             aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
