@@ -59,7 +59,7 @@ export const Navigation = memo(({ colors, isMenuOpen, onMenuToggle, onNavigate }
               <button 
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-onMouseEnter={() => {}}
+                onMouseEnter={() => {}}
                 className="transition-colors hover:opacity-80 px-3 py-2 rounded-md cursor-pointer"
                 style={{ color: colors.secondary }}
               >
